@@ -1,0 +1,172 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html>
+  <head>
+    <title>Getting Started Extension's Popup</title>
+    <script src="http://fb.me/react-0.12.2.js"></script>
+    <script src="http://fb.me/JSXTransformer-0.12.2.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="kontakt.css"/>
+    <script src="kontakt.js"></script>
+    <meta charset="UTF-8">
+
+    </script>
+    <style>
+
+    </style>
+
+
+  </head>
+  <body>
+    
+<script type="text/jsx">
+var messages={};
+var i=0;
+var currentMessage
+
+
+var Start = React.createClass({
+
+
+
+ getInitialState: function() {
+    return{
+
+        profileImage: "http://engr.uconn.edu/~gelyko/images/people_pic/anonymous.png",
+        username: "Username",
+        message: ""}
+
+  },
+
+  openChat: function () {
+
+    if (document.getElementById("chat").style.display=="") {
+      document.getElementById("chat").style.display ="block";
+    }
+    else {
+      document.getElementById("chat").style.display ="";
+
+
+    }
+  },
+  setUsername: function (event) {
+    this.setState({
+      username: event.target.value
+    });
+
+
+  },
+  setCurrentMessage: function (event) {
+    this.setState({
+      message: event.target.value
+
+    });
+
+
+  },
+
+  sendMessage: function () {
+      messages[i]=currentMessage;
+      this.setState({
+        message: ''
+
+      });
+      alert(messages[i]);
+      i++;
+
+
+
+  },
+
+
+  chatlogIn: function () {
+
+    document.getElementById("hej").style.display ="none";
+    document.getElementById("hideBeforeLogIn").style.display ="block";
+
+
+
+
+  },
+
+  /*
+  1. array där alla meddelande sparas
+  2. funvtion som sparar meddelant och skickar
+  3. for loop? Kommer icke funka, visar bara den sista då. Koll på .map kanske?
+  4. $profit$
+  */
+  changeOnlineStatus: function () {
+
+  if(document.getElementById("online").style.backgroundColor=="red") {
+    document.getElementById("online").style.backgroundColor="green";
+  }
+  else {
+    document.getElementById("online").style.backgroundColor="red";
+  }
+
+},
+
+  render: function() {
+      var onlineStatus=this.state.onlineStatus;
+      var username=this.state.username;
+      currentMessage=this.state.message;
+    return (
+
+<div>
+
+      <div className="background">
+            <div id="hej">
+
+              <input type="text" value={username} onChange={this.setUsername} /> <button onClick={this.chatlogIn}>Submit</button>
+            </div>
+
+
+
+
+            <div id="hideBeforeLogIn">
+              <img className="chatImage" src={this.state.profileImage}></img>
+              <p className="name">{this.state.username}</p>
+              <img className="chatLogo" src="http://www.monacomediaforum.org/partners/ericsson.png" onClick={this.openChat}></img>
+
+
+              <div id="online" onClick={this.changeOnlineStatus} ></div>
+            </div>
+
+            </div>
+
+
+
+
+        <div id="chat">
+          <div className="chatInput" showMessages={messages}>
+            {this.showMessages.map(function(showMessages) {
+                return (
+                  <p>{showMessages}</p>
+
+                );
+
+
+            })
+
+
+            }
+
+            <input type="text" value={this.state.message} onChange={this.setCurrentMessage}/> <button onClick={this.sendMessage}>Submit</button>
+          </div>
+        </div>
+</div>
+  );
+}
+});
+var start = React.createElement(Start);
+React.render(start, document.body);
+
+
+</script>
+
+  </body>
+</html>
